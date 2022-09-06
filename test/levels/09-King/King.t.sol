@@ -19,21 +19,25 @@ contract KingTest is Test {
         /////////////////
         // LEVEL SETUP //
         /////////////////
-        KingFactory vaultFactory = new KingFactory();
-        ethernaut.registerLevel(vaultFactory);
+        KingFactory kingFactory = new KingFactory();
+        ethernaut.registerLevel(kingFactory);
         vm.startPrank(attacker);
         address levelAddress = ethernaut.createLevelInstance{
             value: 0.001 ether
-        }(vaultFactory);
+        }(kingFactory);
         King ethernautKing = King(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
+        // 1. deploy the attack contract
+        // doesnot have fallback or receive, so will revert on any ether transfer
+        // essentially like a DOS.
         KingAttack attackerContract = new KingAttack{value: 0.01 ether}(
             payable(address(ethernautKing))
         );
 
+        // check if the attacker contract is still the king
         assertEq(ethernautKing._king(), address(attackerContract));
 
         //////////////////////
