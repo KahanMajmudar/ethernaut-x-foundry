@@ -3,19 +3,14 @@
 pragma solidity ^0.8.10;
 
 import "./MagicNum.sol";
-import "../BaseLevel.sol";
+import "../../core/BaseLevel.sol";
 
 interface Solver {
     function whatIsTheMeaningOfLife() external view returns (bytes32);
 }
 
 contract MagicNumFactory is Level {
-    function createInstance(address)
-        public
-        payable
-        override
-        returns (address)
-    {
+    function createInstance(address) public payable override returns (address) {
         return address(new MagicNum());
     }
 
@@ -33,8 +28,8 @@ contract MagicNumFactory is Level {
         // Query the solver for the magic number.
         bytes32 magic = solver.whatIsTheMeaningOfLife();
         if (
-            magic
-                != 0x000000000000000000000000000000000000000000000000000000000000002a
+            magic !=
+            0x000000000000000000000000000000000000000000000000000000000000002a
         ) {
             return false;
         }
