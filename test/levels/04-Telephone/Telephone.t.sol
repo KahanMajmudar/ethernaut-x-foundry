@@ -15,7 +15,7 @@ contract TelephoneTest is Test {
         vm.deal(attacker, 1 ether);
     }
 
-    function testCoinflipHack() public {
+    function testTelephoneHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
